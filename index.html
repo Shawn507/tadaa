@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Page 1 - Envelope */
+        .envelope-page {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .envelope-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1594736797933-d0c62c5d6926?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .envelope {
+            width: 400px;
+            height: 280px;
+            position: relative;
+            cursor: pointer;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            z-index: 2;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .envelope:hover {
+            transform: translateY(-10px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .envelope-body {
+            width: 100%;
+            height: 200px;
+            background: #f4f4f4;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .envelope-flap {
+            width: 100%;
+            height: 140px;
+            background: #e8e8e8;
+            border: 2px solid #d4af37;
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            position: absolute;
+            top: -70px;
+            left: -2px;
+            transform-origin: bottom;
+            transition: transform 0.5s ease;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
+
+        .envelope-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #8b4513;
+        }
+
+        .open-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+            font-family: 'Georgia', serif;
+            margin-top: 20px;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.6);
+        }
+
+        .playful-text {
+            font-size: 24px;
+            color: #8b4513;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Page 2 - Letter */
+        .letter-page {
+            min-height: 100vh;
+            background: url('https://images.unsplash.com/photo-1594736797933-d0c62c5d6926?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+            position: relative;
+            display: none;
+            padding: 50px 20px;
+        }
+
+        .letter-page::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1;
+        }
+
+        .letter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 1s ease;
+        }
+
+        .letter-container.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 20px;
+        }
+
+        .letter-title {
+            font-size: 36px;
+            color: #8b4513;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .letter-subtitle {
+            font-size: 18px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .letter-body {
+            line-height: 1.8;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .letter-body p {
+            margin-bottom: 25px;
+            transform: translateX(-50px);
+            opacity: 0;
+            animation: slideIn 1s ease forwards;
+        }
+
+        .letter-body p:nth-child(2) { animation-delay: 0.5s; }
+        .letter-body p:nth-child(3) { animation-delay: 1s; }
+        .letter-body p:nth-child(4) { animation-delay: 1.5s; }
+        .letter-body p:nth-child(5) { animation-delay: 2s; }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .signature {
+            text-align: right;
+            font-size: 24px;
+            color: #8b4513;
+            font-style: italic;
+            margin-top: 40px;
+            border-top: 1px solid #d4af37;
+            padding-top: 20px;
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 20px;
+            animation: fall 4s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 5;
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 350px;
+            transform: translateX(400px);
+            transition: transform 0.5s ease;
+        }
+
+        .music-player.show {
+            transform: translateX(0);
+        }
+
+        .music-toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 6;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+            transition: all 0.3s ease;
+        }
+
+        .music-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.6);
+        }
+
+        .youtube-embed {
+            border-radius: 12px;
+            width: 100%;
+            height: 200px;
+        }
+
+        .music-instruction {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Envelope -->
+    <div class="envelope-page" id="envelopePage">
+        <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body">
+                <div class="envelope-content">
+                    <div class="playful-text">💌 A Special Message For You 💌</div>
+                    <button class="open-btn" id="openBtn">Open Here ❤️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Letter -->
+    <div class="letter-page" id="letterPage">
+        <div class="letter-container" id="letterContainer">
+            <div class="letter-header">
+                <h1 class="letter-title">My Dearest Love</h1>
+                <p class="letter-subtitle">An Apology From The Heart</p>
+            </div>
+            
+            <div class="letter-body">
+                <p>My babygirl,</p>
+                
+                <p>Hey baby, I sorta had to do this because I realized the last conversation we had was far from what we usually have . So, I just wanted to take a moment to express how truly sorry I am.</p>
+                
+                <p>Fact of the matter is you have been this really special person in my life and lately I haven't been a good boyfriend at all. I want you to know that I really care about you and it is the reason my I am up at 3 writing up this apology, you really do deserve better .Sometimes I genuinly do try my best not to hurt your feelings but sometimes things just happen you know.</p>
+                
+                <p>What I am saying is I know I have been wrong on quite a few occassion, but don't worry. Everyday I try new ways of becoming a better person for you... I really have changed a lot and I know I can still do better for you. I am sorry mamaa, I really do mean it when i say you mean the world to me.</p>
+                
+                <p>If the song doesn't play as you read this just try and play teddy swim's cover of you're still the one as you read this. I am really sleepy and I guess my creativity imepungua but I hope you understand what I am trying to put across.</p>
+                
+                <p> Good morning mamaa❤️</p>
+            </div>
+            
+            <div class="signature">
+             Before I forget,<br>
+                Whose my babygirl ? 💕
+            </div>
+        </div>
+    </div>
+
+    <!-- Falling Hearts -->
+    <div class="hearts" id="hearts"></div>
+
+    <!-- Music Player -->
+    <div class="music-player hidden" id="musicPlayer">
+        <iframe 
+            class="youtube-embed"
+            src="https://www.youtube.com/embed/-xXZ8XvK2JI?autoplay=1&start=7" 
+            frameBorder="0" 
+            allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+        </iframe>
+        <div class="music-instruction">💕 Press play to hear "You're Still The One" by Teddy Swims 💕</div>
+    </div>
+
+    <!-- Music Toggle Button -->
+    <button class="music-toggle-btn hidden" id="musicToggleBtn">🎵</button>
+
+    <script>
+        const envelopePage = document.getElementById('envelopePage');
+        const letterPage = document.getElementById('letterPage');
+        const letterContainer = document.getElementById('letterContainer');
+        const openBtn = document.getElementById('openBtn');
+        const musicPlayer = document.getElementById('musicPlayer');
+        const musicToggleBtn = document.getElementById('musicToggleBtn');
+        const hearts = document.getElementById('hearts');
+
+        let musicPlayerVisible = false;
+
+        // Open letter function
+        openBtn.addEventListener('click', function() {
+            envelopePage.style.display = 'none';
+            letterPage.style.display = 'block';
+            musicToggleBtn.classList.remove('hidden');
+            
+            setTimeout(() => {
+                letterContainer.classList.add('show');
+                createFallingHearts();
+                // Show music player after letter loads
+                setTimeout(() => {
+                    showMusicPlayer();
+                }, 2000);
+            }, 500);
+        });
+
+        // Music player controls
+        function showMusicPlayer() {
+            musicPlayer.classList.remove('hidden');
+            setTimeout(() => {
+                musicPlayer.classList.add('show');
+            }, 100);
+            musicPlayerVisible = true;
+        }
+
+        musicToggleBtn.addEventListener('click', function() {
+            if (musicPlayerVisible) {
+                musicPlayer.classList.remove('show');
+                musicToggleBtn.textContent = '🎵';
+                musicPlayerVisible = false;
+            } else {
+                musicPlayer.classList.add('show');
+                musicToggleBtn.textContent = '🔇';
+                musicPlayerVisible = true;
+            }
+        });
+
+        // Create falling hearts animation
+        function createFallingHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                hearts.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 300);
+        }
+
+        // Smooth scrolling for letter content
+        window.addEventListener('scroll', function() {
+            if (letterPage.style.display === 'block') {
+                const scrolled = window.pageYOffset;
+                const parallax = scrolled * 0.5;
+                letterPage.style.transform = `translateY(${parallax}px)`;
+            }
+        });
+
+        // Envelope hover effect
+        document.getElementById('envelope').addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.05)';
+        });
+
+        document.getElementById('envelope').addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    </script>
+</body>
+</html>
