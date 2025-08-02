@@ -198,6 +198,7 @@
         .letter-body p:nth-child(3) { animation-delay: 1s; }
         .letter-body p:nth-child(4) { animation-delay: 1.5s; }
         .letter-body p:nth-child(5) { animation-delay: 2s; }
+        .letter-body p:nth-child(6) { animation-delay: 2.5s; }
 
         @keyframes slideIn {
             to {
@@ -243,60 +244,6 @@
                 transform: translateY(100vh) rotate(360deg);
                 opacity: 0;
             }
-        }
-
-        .music-player {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 5;
-            background: rgba(255,255,255,0.95);
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            width: 350px;
-            transform: translateX(400px);
-            transition: transform 0.5s ease;
-        }
-
-        .music-player.show {
-            transform: translateX(0);
-        }
-
-        .music-toggle-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 6;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            color: white;
-            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
-            transition: all 0.3s ease;
-        }
-
-        .music-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(255,107,107,0.6);
-        }
-
-        .youtube-embed {
-            border-radius: 12px;
-            width: 100%;
-            height: 200px;
-        }
-
-        .music-instruction {
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-            margin-top: 8px;
-            font-style: italic;
         }
 
         .hidden {
@@ -350,68 +297,31 @@
     <!-- Falling Hearts -->
     <div class="hearts" id="hearts"></div>
 
-    <!-- Music Player -->
-    <div class="music-player hidden" id="musicPlayer">
-        <iframe 
-            class="youtube-embed"
-            src="https://www.youtube.com/embed/-xXZ8XvK2JI?autoplay=1&start=7" 
-            frameBorder="0" 
-            allowfullscreen="" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-            loading="lazy">
-        </iframe>
-        <div class="music-instruction">💕 Press play to hear "You're Still The One" by Teddy Swims 💕</div>
-    </div>
-
-    <!-- Music Toggle Button -->
-    <button class="music-toggle-btn hidden" id="musicToggleBtn">🎵</button>
+    <!-- Hidden Background Music -->
+    <iframe 
+        id="backgroundMusic"
+        src="https://www.youtube.com/embed/-xXZ8XvK2JI?autoplay=1&start=0&controls=0&loop=1&playlist=-xXZ8XvK2JI&mute=0" 
+        style="display: none;"
+        allow="autoplay">
+    </iframe>
 
     <script>
         const envelopePage = document.getElementById('envelopePage');
         const letterPage = document.getElementById('letterPage');
         const letterContainer = document.getElementById('letterContainer');
         const openBtn = document.getElementById('openBtn');
-        const musicPlayer = document.getElementById('musicPlayer');
-        const musicToggleBtn = document.getElementById('musicToggleBtn');
+        const backgroundMusic = document.getElementById('backgroundMusic');
         const hearts = document.getElementById('hearts');
-
-        let musicPlayerVisible = false;
 
         // Open letter function
         openBtn.addEventListener('click', function() {
             envelopePage.style.display = 'none';
             letterPage.style.display = 'block';
-            musicToggleBtn.classList.remove('hidden');
             
             setTimeout(() => {
                 letterContainer.classList.add('show');
                 createFallingHearts();
-                // Show music player after letter loads
-                setTimeout(() => {
-                    showMusicPlayer();
-                }, 2000);
             }, 500);
-        });
-
-        // Music player controls
-        function showMusicPlayer() {
-            musicPlayer.classList.remove('hidden');
-            setTimeout(() => {
-                musicPlayer.classList.add('show');
-            }, 100);
-            musicPlayerVisible = true;
-        }
-
-        musicToggleBtn.addEventListener('click', function() {
-            if (musicPlayerVisible) {
-                musicPlayer.classList.remove('show');
-                musicToggleBtn.textContent = '🎵';
-                musicPlayerVisible = false;
-            } else {
-                musicPlayer.classList.add('show');
-                musicToggleBtn.textContent = '🔇';
-                musicPlayerVisible = true;
-            }
         });
 
         // Create falling hearts animation
